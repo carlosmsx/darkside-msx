@@ -6,6 +6,8 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 
 ---
 
+![darkside screenshot](darkside.png)
+
 ## What it does
 
 - Displays a **SCREEN 2 (Graphics 2)** scene with the iconic prism artwork, album title, and credits
