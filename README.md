@@ -24,7 +24,6 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 | `darkside.dsk` | Disk image |
 | `darkside.lst` | TASM assembler listing |
 | `darkside.bat` | Build script (Windows) |
-| `setpath.bat` | Adds TASM to PATH |
 | `TASM80.TAB` | TASM instruction table for Z80 |
 
 ## Building
@@ -32,7 +31,6 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 Requires **Telemark Assembler (TASM) v3.2** on Windows:
 
 ```bat
-setpath.bat       :: adds TASM to PATH (edit if needed)
 darkside.bat      :: assembles and produces darkside.rom
 ```
 
