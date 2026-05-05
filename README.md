@@ -9,7 +9,7 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 ## What it does
 
 - Displays a **SCREEN 2 (Graphics 2)** scene with the iconic prism artwork, album title, and credits
-- Plays a **3-channel PSG melody** (AY-3-8910) using a custom music engine with per-note envelope control, pitch adjustment, sustain, and noise
+- Plays a **3-channel PSG melody** (AY-3-8910) using a custom music engine with software-defined envelope tables, per-channel pitch offset, noise, and real-time parameter control
 - Animates a **starfield** of 20 sprites expanding outward from the screen center, each with randomized direction and age-based pattern scaling
 - All interactive — keyboard controls let you tweak audio parameters in real time (pitch, sustain, noise, envelope evolution speed)
 
@@ -17,11 +17,12 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 
 | File | Description |
 |------|-------------|
-| `darkside.asm` | Main source: ROM header, music engine, starfield, graphics init |
+| `darkside.asm` | Main source: ROM header, music engine, graphics init |
+| `estrella.asm` | Starfield system: constants, sprite patterns, PRNG, INIT\_STARS, UPDATE\_STARS, TOGGLE\_STARS |
 | `notas.asm` | Note frequency constants for Z80 (C0–B6, sharps and flats) |
 | `prisma.asm` | Binary pixel data for the prism graphic (VRAM tile layout) |
 | `darkside.rom` | Compiled ROM image (16 KB), ready to load in an emulator |
-| `darkside.dsk` | Disk image |
+| `darkside.dsk` | MSX disk image containing the BASIC programs used to design the SCREEN 2 prism artwork |
 | `darkside.lst` | TASM assembler listing |
 | `darkside.bat` | Build script (Windows) |
 | `TASM80.TAB` | TASM instruction table for Z80 |
@@ -54,15 +55,18 @@ Load `darkside.rom` in any MSX emulator that supports ROM cartridges. Tested on 
 
 | Key | Action |
 |-----|--------|
-| `q` / `a` | Pitch up / down |
-| `w` / `s` | Sustain up / down |
-| `e` / `d` | Noise up / down |
-| `r` / `f` | Envelope evolution speed up / down |
+| `q` / `a` | Detune channel B up / down (pitch offset relative to channel A, for modulation effects) |
+| `w` / `s` | Envelope offset up / down (shifts the starting position within the software envelope tables defined in the code, not the AY hardware envelope) |
+| `e` / `d` | Percussion noise pitch up / down (tunes the PSG noise register) |
+| `r` / `f` | Playback speed up / down |
+| `t` / `g` | Starfield speed up / down (0 = every tick, max = every 16 ticks) |
 | `Space` | Toggle starfield on / off |
 
 ## Technical notes
 
-**Music engine** — tick-based, hooked into the MSX interrupt via `RST 30h`. Each channel (A, B, C of the PSG) has an independent state block tracking: current note pointer, duration counter, envelope table pointer, frequency registers, pitch offset, and volume register. Seven envelope curves (`EVOL0`–`EVOL6`) shape each note's amplitude over time.
+**Music engine** — tick-based, hooked into the MSX interrupt via `RST 30h`. Each channel (A, B, C of the PSG) has an independent state block tracking: current note pointer, duration counter, envelope table pointer, frequency registers, pitch offset, and volume register.
+
+Volume shaping is handled entirely in software through seven envelope tables (`EVOL0`–`EVOL6`) defined in the code, each 256 bytes long and terminated with `FFh`. Each note references one of these tables; the engine walks through it tick by tick, writing the current volume value to the AY-3-8910's volume register. This approach bypasses the AY hardware envelope entirely, allowing arbitrary amplitude curves — decays, sustained pads, tremolo patterns, and attack shapes — without being limited to the chip's built-in envelope generator. The `w`/`s` keys shift the starting offset into the table, effectively changing the attack/sustain character of the sound in real time.
 
 **Starfield** — 20 sprites managed in RAM (`STAR_TABLE`). Each star carries position (Y, X), velocity (DX, DY), and an age counter. On reaching `MAX_AGE` (40 ticks) a star resets to the screen center and picks a new direction from a 16-entry direction table using a Galois LFSR PRNG seeded from the Z80's `R` register at boot.
 
