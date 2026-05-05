@@ -4,10 +4,10 @@
 *.sym
 
 # ROM compilada (opcional: comenta esta línea si quieres incluirla en el repo)
-# darkside.rom
+darkside.rom
 
 # Imágenes de disco generadas
-# darkside.dsk
+darkside.dsk
 
 # Scripts de entorno local
 setpath.bat
