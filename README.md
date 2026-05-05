@@ -20,9 +20,6 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 | `darkside.asm` | Main source: ROM header, music engine, starfield, graphics init |
 | `notas.asm` | Note frequency constants for Z80 (C0–B6, sharps and flats) |
 | `prisma.asm` | Binary pixel data for the prism graphic (VRAM tile layout) |
-| `darkside.rom` | Compiled ROM image (16 KB), ready to load in an emulator |
-| `darkside.dsk` | Disk image |
-| `darkside.lst` | TASM assembler listing |
 | `darkside.bat` | Build script (Windows) |
 | `TASM80.TAB` | TASM instruction table for Z80 |
 
