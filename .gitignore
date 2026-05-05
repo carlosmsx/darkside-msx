@@ -1,0 +1,17 @@
+# Archivos generados por el ensamblador
+*.obj
+*.lst
+*.sym
+
+# ROM compilada (opcional: comenta esta línea si quieres incluirla en el repo)
+# darkside.rom
+
+# Imágenes de disco generadas
+# darkside.dsk
+
+# Scripts de entorno local
+setpath.bat
+
+# Windows
+Thumbs.db
+desktop.ini
