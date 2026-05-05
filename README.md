@@ -21,12 +21,8 @@ By **Carlos Escobar** (CarlosMSX) · 2025
 | `estrella.asm` | Starfield system: constants, sprite patterns, PRNG, INIT\_STARS, UPDATE\_STARS, TOGGLE\_STARS |
 | `notas.asm` | Note frequency constants for Z80 (C0–B6, sharps and flats) |
 | `prisma.asm` | Binary pixel data for the prism graphic (VRAM tile layout) |
-<<<<<<< HEAD
 | `darkside.rom` | Compiled ROM image (16 KB), ready to load in an emulator |
 | `darkside.dsk` | MSX disk image containing the BASIC programs used to design the SCREEN 2 prism artwork |
-| `darkside.lst` | TASM assembler listing |
-=======
->>>>>>> fcb8134a9388faf76e2a86a5f1bce92937d7c77e
 | `darkside.bat` | Build script (Windows) |
 | `TASM80.TAB` | TASM instruction table for Z80 |
 
